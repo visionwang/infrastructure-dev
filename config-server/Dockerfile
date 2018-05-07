@@ -1,11 +1,7 @@
-FROM fabric8/java-jboss-openjdk8-jdk:1.4
+FROM yuuyoo/openjdk:1.8
+MAINTAINER dave@yuuyoo.com
 
-ENV JAVA_APP_JAR="app.jar"
-ENV JAVA_MAX_MEM_RATIO=50
-ENV AB_OFF ""
+COPY config-0.0.1-SNAPSHOT.jar /deployments/app.jar
 
-ADD --chown=jboss:jboss https://pilipa-assets.oss-cn-beijing.aliyuncs.com/soft/config-server.jar /deployments/app.jar
-
-ENV ENCRYPT_KEY_STORE_PASSWORD=letmein
-ENV ENCRYPT_KEY_STORE_ALIAS=mytestkey
-ENV ENCRYPT_KEY_STORE_SECRET=changeme
+ENV URL="http://127.0.0.1:8887/actuator/health"
+EXPOSE 8888 8887

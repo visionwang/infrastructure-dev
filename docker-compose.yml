@@ -9,35 +9,36 @@ services:
       - "8761:8761"
       - "8762:8762"
     environment:
-      - JAVA_OPTIONS=-server -XX:-HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/pilipa/ -Duser.timezone=Asia/Hong_Kong
-      - CONFIG_SERVER_URL=http://config-server:8888
+      - JAVA_OPTIONS=-server -XX:-HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/yuuyoo/ -Duser.timezone=Asia/Shanghai
+      #- CONFIG_SERVER_URL=http://config-server:8888
     networks:
-      - pilipa-dev
+      - yuuyoo-dev
   config-server:
     build: ./config-server
     ports:
       - "8888:8888"
-      - "8889:8889"
+      - "8887:8887"
     volumes:
       # 替换成本地config-repo仓库地址
-      - ${configRepo}:/Users/kane/git/pilipa/config-repo
+      - "${configRepo}:/config-repo"
     environment:
-      - JAVA_OPTIONS=-server -XX:-HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/pilipa/ -Duser.timezone=Asia/Hong_Kong
+      - JAVA_OPTIONS=-server -XX:-HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/yuuyoo/ -Duser.timezone=Asia/Shanghai
       - spring.rabbitmq.addresses=rabbit:5672
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
     networks:
-      - pilipa-dev
+      - yuuyoo-dev
   mongo:
     image: mongo:3.4.10
     ports:
       - "27017:27017"
     networks:
-      - pilipa-dev
+      - yuuyoo-dev
     volumes:
       - mongo_data:/data/db
   redis:
     image: redis:3.2-alpine
     networks:
-      - pilipa-dev
+      - yuuyoo-dev
     ports:
       - "6379:6379"
     volumes:
@@ -50,12 +51,12 @@ services:
       - "15672:15672"
       - "61613:61613"
     networks:
-      - pilipa-dev
+      - yuuyoo-dev
     environment:
-      - RABBITMQ_DEFAULT_VHOST=pilipa
+      - RABBITMQ_DEFAULT_VHOST=yuuyoo
 
 networks:
-  pilipa-dev:
+  yuuyoo-dev:
     driver: bridge
 
 volumes:

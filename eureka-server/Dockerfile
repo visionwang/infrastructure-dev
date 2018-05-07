@@ -1,7 +1,7 @@
-FROM fabric8/java-jboss-openjdk8-jdk:1.4
+FROM yuuyoo/openjdk:1.8
+MAINTAINER dave@yuuyoo.com
 
-ENV JAVA_APP_JAR="app.jar"
-ENV JAVA_MAX_MEM_RATIO=50
-ENV AB_OFF ""
+COPY eureka-0.0.1-SNAPSHOT.jar /deployments/app.jar
 
-ADD --chown=jboss:jboss https://pilipa-assets.oss-cn-beijing.aliyuncs.com/soft/eureka-1.0.0.jar /deployments/app.jar
+ENV URL="http://127.0.0.1:8762/manage/status"
+EXPOSE 8761 8762

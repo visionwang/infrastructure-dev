@@ -1,1 +1,1 @@
-docker build -t pilipa/rabbitmq:3.6.10-management-alpine .
+docker build -t yuuyoo/rabbitmq:3.6.10-management-alpine .
